@@ -166,30 +166,34 @@ export async function submitPayload() {
     userAgent: navigator.userAgent,
   };
   const el = document.getElementById("sheet-status");
-  if (el) el.textContent = "⏳ Enviando…";
+  if (el) el.textContent = "Enviando...";
   const status = await submitToSheets(payload);
   if (status === "ok") { state.submitted = true; saveState(); }
   if (el) {
     el.textContent = status === "ok"
-      ? "✓ Registrado en la planilla del docente"
-      : "⚠ Sin conexión: se reenviará automáticamente";
+      ? "Registrado en la planilla del docente"
+      : "Sin conexion: se reenviara automaticamente";
   }
 }
 
 export function setSheetStatus(status) {
   const el = document.getElementById("sheet-status");
   if (!el) return;
-  if (status === "ok") el.textContent = "✓ Registrado en la planilla del docente";
-  else if (status === "queued") el.textContent = "⚠ Sin conexión: se reenviará automáticamente";
-  else el.textContent = "⏳ Enviando…";
+  if (status === "ok") el.textContent = "Registrado en la planilla del docente";
+  else if (status === "queued") el.textContent = "Sin conexion: se reenviara automaticamente";
+  else el.textContent = "Enviando...";
 }
 
 export function escapeHtml(value) {
+  const amp = "&" + "amp;";
+  const lt = "&" + "lt;";
+  const gt = "&" + "gt;";
+  const quot = "&" + "quot;";
   return String(value)
-    .replaceAll("&", "&")
-    .replaceAll("<", "<")
-    .replaceAll(">", ">")
-    .replaceAll('"', """);
+    .replaceAll("&", amp)
+    .replaceAll("<", lt)
+    .replaceAll(">", gt)
+    .replaceAll('"', quot);
 }
 
 export { COURSES, GROUPS, STATIONS, STORAGE_KEY, initOfflineQueue, flushPendingSubmissions };
